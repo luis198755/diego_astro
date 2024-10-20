@@ -1,0 +1,209 @@
+<header>
+    <nav class="container">
+        <a href="#home" class="logo">Diego Rodríguez</a>
+        <button class="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="menu">
+            <li><a href="#home">Inicio</a></li>
+            <li><a href="#about">Diego</a></li>
+            <li><a href="#huapango-songs">Huapangos</a></li>
+            <li class="has-submenu">
+                <a href="#performances">Actuaciones</a>
+                <ul class="submenu">
+                    <li><a href="#upcoming">Próximas</a></li>
+                    <li><a href="#past">Pasadas</a></li>
+                </ul>
+            </li>
+            <li><a href="#gallery">Galerías</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<style>
+    header {
+        background-color: rgba(var(--accent), 0.9);
+        padding: 0.5rem 0; /* Reduced padding */
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+    }
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem; /* Slightly reduced font size */
+        color: white;
+        text-decoration: none;
+    }
+    .menu {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .menu li {
+        margin-left: 1.5rem; /* Slightly reduced margin */
+        position: relative;
+    }
+    .menu > li > a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+        font-size: 0.9rem; /* Reduced font size */
+    }
+    .menu > li > a:hover {
+        color: rgb(var(--accent-light));
+    }
+    .has-submenu > a::after {
+        content: '▼';
+        font-size: 0.6em; /* Reduced size */
+        margin-left: 3px;
+    }
+    .submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: rgba(var(--accent), 0.9);
+        padding: 0.3rem 0; /* Reduced padding */
+        list-style-type: none;
+        min-width: 140px; /* Slightly reduced width */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    .has-submenu:hover .submenu {
+        display: block;
+    }
+    .submenu li {
+        margin: 0;
+    }
+    .submenu a {
+        color: white;
+        text-decoration: none;
+        padding: 0.4rem 0.8rem; /* Reduced padding */
+        display: block;
+        transition: background-color 0.3s ease;
+        font-size: 0.85rem; /* Reduced font size */
+    }
+    .submenu a:hover {
+        background-color: rgba(var(--accent-light), 0.3);
+    }
+    .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+    .hamburger span {
+        display: block;
+        width: 22px; /* Slightly reduced width */
+        height: 2px; /* Reduced height */
+        background-color: white;
+        margin: 4px 0; /* Reduced margin */
+        transition: all 0.3s ease;
+    }
+    @media (max-width: 768px) {
+        /* Mobile styles remain largely the same */
+        nav {
+            flex-wrap: wrap;
+        }
+        .hamburger {
+            display: block;
+        }
+        .menu {
+            flex-direction: column;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .menu.active {
+            max-height: 500px;
+        }
+        .menu > li {
+            margin: 0.4rem 0; /* Slightly reduced margin */
+        }
+        .submenu {
+            position: static;
+            display: none;
+            background-color: rgba(var(--accent-light), 0.1);
+            padding-left: 1rem;
+        }
+        .has-submenu.active .submenu {
+            display: block;
+        }
+    }
+</style>
+
+<script>
+    function initMenu() {
+        const hamburger = document.querySelector(".hamburger");
+        const menu = document.querySelector(".menu");
+        const menuItems = document.querySelectorAll(".menu > li > a");
+        const submenus = document.querySelectorAll(".has-submenu");
+
+        if (!hamburger || !menu) {
+            return;
+        }
+
+        function toggleMenu() {
+            menu.classList.toggle("active");
+            hamburger.classList.toggle("active");
+            const isExpanded =
+                hamburger.getAttribute("aria-expanded") === "true" || false;
+            hamburger.setAttribute("aria-expanded", (!isExpanded).toString());
+        }
+
+        hamburger.addEventListener("click", (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
+
+        menuItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                if (window.innerWidth <= 768 && !item.parentElement.classList.contains('has-submenu')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        submenus.forEach((submenu) => {
+            const submenuToggle = submenu.querySelector('a');
+            const submenuItems = submenu.querySelectorAll('.submenu a');
+
+            submenuToggle.addEventListener("click", (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    submenu.classList.toggle("active");
+                }
+            });
+
+            submenuItems.forEach((item) => {
+                item.addEventListener("click", () => {
+                    if (window.innerWidth <= 768) {
+                        toggleMenu();
+                        submenu.classList.remove("active");
+                    }
+                });
+            });
+        });
+
+        hamburger.setAttribute("aria-expanded", "false");
+    }
+
+    // Run on initial load
+    initMenu();
+
+    // Run after each navigation in Astro
+    document.addEventListener("astro:page-load", initMenu);
+</script>

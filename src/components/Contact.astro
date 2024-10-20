@@ -1,0 +1,111 @@
+---
+const emailAddress = "diegorn_2016@hotmail.com";
+const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`mailto:${emailAddress}`)}`;
+---
+
+<section id="contact" class="contact">
+    <div class="container">
+        <h2>Contacto</h2>
+        <div class="contact-info">
+            <p>Escanea el código QR o toca para enviar un correo:</p>
+            <div class="qr-container">
+                <img src={qrCodeUrl} alt="Código QR para enviar correo electrónico" class="qr-code" width="200" height="200" />
+                <div class="email-overlay">
+                    <a href={`mailto:${emailAddress}`} aria-label="Enviar correo electrónico a {emailAddress}">{emailAddress}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact {
+        background-color: white;
+        padding: 3rem 1rem;
+    }
+    h2 {
+        text-align: center;
+        color: rgb(var(--accent));
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .contact-info {
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    p {
+        font-size: 1rem;
+        color: rgb(var(--accent-dark));
+        margin-bottom: 1rem;
+    }
+    .qr-container {
+        position: relative;
+        display: inline-block;
+        touch-action: manipulation;
+    }
+    .qr-code {
+        display: block;
+        margin: 0 auto;
+        border: 2px solid rgb(var(--accent));
+        border-radius: 10px;
+        padding: 10px;
+        background-color: white;
+        transition: opacity 0.3s ease;
+        max-width: 100%;
+        height: auto;
+    }
+    .email-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(var(--accent), 0.8);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+    }
+    .email-overlay a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 0.5rem;
+        word-break: break-all;
+        text-align: center;
+    }
+    @media (hover: hover) {
+        .qr-container:hover .qr-code {
+            opacity: 0.3;
+        }
+        .qr-container:hover .email-overlay {
+            opacity: 1;
+        }
+    }
+    @media (hover: none) {
+        .qr-container:active .qr-code {
+            opacity: 0.3;
+        }
+        .qr-container:active .email-overlay {
+            opacity: 1;
+        }
+    }
+    @media (max-width: 600px) {
+        .contact {
+            padding: 2rem 0.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 0.9rem;
+        }
+        .email-overlay a {
+            font-size: 0.7rem;
+        }
+    }
+</style>

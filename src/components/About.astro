@@ -1,0 +1,71 @@
+---
+
+---
+
+<section id="about" class="about">
+    <div class="container">
+        <h2>Acerca de Diego</h2>
+        <div class="about-content">
+            <img src="/diego-profile.jpg" alt="Diego playing the violin" />
+            <div class="about-text">
+                <p>
+                    Diego Rodríguez un niño de 7 años en el mundo de la música
+                    huapango. Nacido y criado en Puebla, México. Diego comenzó a
+                    tocar el violín a los 6 años y rápidamente se enamoró de los
+                    sonidos tradicionales del huapango.
+                </p>
+                <p>
+                    Diego, a pesar de su juventud, se dedica con gran esfuerzo a
+                    perfeccionar sus habilidades en el huapango. Practica a
+                    diario, estudia las técnicas del género y profundiza en las
+                    raíces históricas y culturales del huapango, lo que mejora
+                    sus interpretaciones.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about {
+        padding: 6rem 0;
+        background-color: white;
+    }
+    h2 {
+        text-align: center;
+        color: rgb(var(--accent));
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+    .about-content {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+    }
+    img {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    img:hover {
+        transform: scale(1.05);
+    }
+    .about-text p {
+        margin-bottom: 1rem;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    @media (max-width: 768px) {
+        .about-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        img {
+            width: 300px;
+            height: 300px;
+        }
+    }
+</style>
